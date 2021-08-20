@@ -12,30 +12,28 @@
           class="search-bar"
           placeholder="Search..."
           v-model="query"
-          @keyup.enter="fetchWeather"
+          @keypress="fetchWeather"
         />
       </div>
 
-      <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
+      <!-- <div class="weather-wrap" v-if="typeof weather.main != 'undefined'">
         <div class="location-box">
-          <div class="location">
-            {{ weather.name }}, {{ weather.sys.country }}
-          </div>
+          <div class="location">{{ weather.name }}, {{ weather.sys.country }}</div>
           <div class="date">{{ dateBuilder() }}</div>
         </div>
 
         <div class="weather-box">
-          <div class="temp">{{ Math.round(weather.main.temp) }}°C</div>
+          <div class="temp">{{ Math.round(weather.main.temp) }}°c</div>
           <div class="weather">{{ weather.weather[0].main }}</div>
         </div>
-      </div>
+      </div> -->
     </main>
   </div>
 </template>
 
 <script>
 export default {
-  name: "App",
+  name: "app",
   data() {
     return {
       api_key: "a3976c36f6295d4f0874bc080cd72290",
@@ -45,14 +43,16 @@ export default {
     };
   },
   methods: {
-    fetchWeather() {
-      fetch(
-        `${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
-      )
-        .then((res) => {
-          return res.json();
-        })
-        .then(this.setResults);
+    fetchWeather(e) {
+      if (e.key == "Enter") {
+        fetch(
+          `${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
+        )
+          .then((res) => {
+            return res.json();
+          })
+          .then(this.setResults);
+      }
     },
     setResults(results) {
       this.weather = results;

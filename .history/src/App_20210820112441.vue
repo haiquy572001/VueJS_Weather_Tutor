@@ -45,7 +45,7 @@ export default {
     };
   },
   methods: {
-    fetchWeather() {
+    fetchWeather(e) {
       fetch(
         `${this.url_base}weather?q=${this.query}&units=metric&APPID=${this.api_key}`
       )
